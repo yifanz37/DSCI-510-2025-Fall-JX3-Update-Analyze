@@ -50,8 +50,8 @@ def main() -> None:
         }
 
         for download_url_item in group.get("url", []):
-            record = common_metadata.copy() # Start with the common metadata
-            record["download_url"] = download_url_item # Add the specific download URL
+            record = common_metadata.copy()
+            record["download_url"] = download_url_item
             records.append(record)
 
     df = pd.DataFrame(records)
