@@ -5,14 +5,9 @@ import requests
 import json
 
 API_URL = "https://zt.xoyo.com/other/updatepage/index.php"
-PARAMS = {
-    "act": "apixunleilist",
-    "game": "jx3V4",
-    "num": 300
-}
 
 RAW_DIR = Path("data/raw")
-RAW_JSON_PATH = RAW_DIR / "patch_packages_raw.json"
+RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def fetch_json(url: str, params: dict) -> dict:
@@ -35,9 +30,21 @@ def save_json(data: dict, path: Path) -> None:
 
 
 def main() -> None:
-    data = fetch_json(API_URL, PARAMS)
-    save_json(data, RAW_JSON_PATH)
-    print(f"Saved raw JSON -> {RAW_JSON_PATH}")
+    params_xunlei = {"act": "apixunleilist", "game": "jx3V4", "num": 300}
+    RAW_XUNLEI_PATH = RAW_DIR / "xunlei_list_raw.json"
+
+    print("Fetching xunlei list...")
+    xunlei_data = fetch_json(API_URL, params_xunlei)
+    save_json(xunlei_data, RAW_XUNLEI_PATH)
+    print(f"Saved raw JSON -> {RAW_XUNLEI_PATH}")
+
+    params_micro = {"act": "apimicrolist", "game": "jx3V4", "num": 300}
+    RAW_MICRO_PATH = RAW_DIR / "micro_list_raw.json"
+
+    print("Fetching micro list...")
+    micro_data = fetch_json(API_URL, params_micro)
+    save_json(micro_data, RAW_MICRO_PATH)
+    print(f"Saved raw JSON -> {RAW_MICRO_PATH}")
 
 
 if __name__ == "__main__":
