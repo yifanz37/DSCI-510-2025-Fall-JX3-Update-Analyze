@@ -4,7 +4,6 @@ import pandas as pd
 
 DATA_PATH = "data/processed/updates_cleaned.csv"
 
-
 def main() -> None:
     df = pd.read_csv(DATA_PATH, parse_dates=["update_time"])
     df = df.dropna(subset=["update_time"]).sort_values("update_time")
@@ -28,7 +27,6 @@ def main() -> None:
     quiet = df[df["gap_days"] >= 14][["update_time", "gap_days"]].tail(10)
     print("\n=== Recent Quiet Periods (gap >= 14 days, last 10) ===")
     print(quiet.to_string(index=False) if len(quiet) else "None")
-
 
 if __name__ == "__main__":
     main()
